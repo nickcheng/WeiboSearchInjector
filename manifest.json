@@ -1,0 +1,24 @@
+{
+	"name": "Weibo Search Result Injector",
+	"description": "Weibo Search Result Injector",
+	"version": "1.0",
+	"permissions": [
+		"http://s.weibo.com/*",
+		"http://weibo.com/*"
+	],
+	"icons" : {
+    "16" : "icon-16.png",
+    "48" : "icon-48.png",
+    "128" : "icon-128.png"
+  },	
+  "content_scripts": [
+	  {
+			"matches": [
+				"http://s.weibo.com/*",
+				"http://weibo.com/*"
+			],
+			"js": ["j.js", "myscript.js"]
+		}
+	],
+	"manifest_version": 2
+}
