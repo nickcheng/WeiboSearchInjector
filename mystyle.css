@@ -19,10 +19,121 @@
     padding: 200px 0 0 0;
     margin: 0;
     background-color: #000;
-    color: #ccc;
+    color: black;
 }
 
 .feed {
     font-weight: normal;
-    font-size: 15px;
+    font-size: 14px;
+    width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+}
+
+.feed .WB_screen {
+    display: none;
+}
+
+.feed .WB_face {
+    float: left;
+    width: 50px;
+    position: relative;
+}
+
+.feed .WB_info {
+    text-align: left;
+}
+
+.feed .WB_text {
+    line-height: 23px;
+    padding: 4px 0 4px;
+    text-align: left;
+}
+
+.feed .S_bg1 {
+    background-color: #d3d3d3;
+}
+
+.feed .WB_detail {
+    margin-left: 65px;
+}
+
+.feed .clearfix {
+    display: block;
+}
+
+.feed .WB_media_list {
+    margin-right: -20px;
+    padding: 0 0 15px;
+}
+
+.feed .WB_media_list li {
+    display: inline;
+    margin: 0 9px 0 0;
+    vertical-align: top;
+}
+
+.feed .chePicMin {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.feed .WB_feed_spec {
+    display: inline-block;
+    width: 316px;
+    height: 100px;
+    padding: 1px;
+    overflow: hidden;
+    border-width: 1px;
+    border-style: solid;
+    box-shadow: 0 0 4px rgba(0,0,0,.1);
+}
+
+.feed .WB_feed_spec_pic {
+    position: relative;
+    float: left;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.feed .WB_feed_spec_info {
+    position: relative;
+    float: right;
+    width: 202px;
+    height: 88px;
+    padding: 8px 4px 4px 10px;
+}
+
+.feed .WB_feed_spec_info .WB_feed_spec_cont .WB_feed_spec_tit {
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 700;
+    width: 100%;
+    margin: 0 0 5px;
+}
+
+.W_autocut {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.feed .WB_feed_spec_info .WB_feed_spec_cont .WB_feed_spec_brieftxt {
+    line-height: 18px;
+    height: 35px;
+    overflow: hidden;
+    margin-bottom: 9px;
+}
+
+.feed .WB_func {
+    text-align: left;
+    color: black;
+}
+
+.feed .WB_handle {
+    float: right;
 }
