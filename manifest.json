@@ -17,7 +17,8 @@
 				"http://s.weibo.com/*",
 				"http://weibo.com/*"
 			],
-			"js": ["j.js", "myscript.js"]
+			"js": ["j.js", "myscript.js"],
+			"css": ["mystyle.css"]
 		}
 	],
 	"manifest_version": 2
