@@ -64,9 +64,6 @@ function checkAndAddButton() {
 }
 
 function addOverlay(event) {
-	// info = 'Hi again! ' + event.data.mid
-	// alert(info);
-
 	//
 	mid = event.data.mid;
 	feed = event.data.feed;
@@ -79,6 +76,11 @@ function addOverlay(event) {
 	});
 
 	//
+	var editorPanel = $(document.createElement('div'));
+	editorPanel.attr('class', 'editorpanel');
+	overlay.append(editorPanel);
+
+	// Added origin feed to overlay
 	feed.attr('class', 'feed');
 	overlay.append(feed);
 
