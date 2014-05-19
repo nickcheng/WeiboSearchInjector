@@ -1,5 +1,16 @@
 window.onload = function() {
-	checkAndAddButton();
+	setInterval(checkAndAddButton, 1000);
+	// checkAndAddButton();
+}
+
+function doInjection(injection, injected) {
+  // Check if injected
+  var button = injected.find('.injectbutton');
+  if (button.length > 0)
+		return;
+
+  // Do injection
+  injected.append(injection);
 }
 
 function getInjected(feed, isMain) {
@@ -43,11 +54,12 @@ function checkAndAddButton() {
 		// Build injection
 		var injection = $(document.createElement('button'));
 		injection.text('Add This');
+		injection.attr('class', 'injectbutton');
 		injection.click({'mid':mid, 'feed':feedO.clone()}, addOverlay);
 
 		// Inject to page under the avatar
 		var injected = getInjected(feedO, isMain);
-    injected.append(injection);
+		doInjection(injection, injected);
 	});
 }
 
