@@ -1,35 +1,52 @@
 window.onload = function() {
-	var feedItemList = $('dl[action-type=feed_list_item]');
-	if (feedItemList.length == 0) {
-		feedItemList = $('div[action-type=feed_list_item]');
-	}
+	checkAndAddButton();
+}
 
-	feedItemList.each(function(idx, feed) {
-		// Get Weibo link
-		var d = $(feed).find('.date').length > 0 ? $(feed).find('.date'): $(feed).find('a[node-type="feed_list_item_date"]');
-		var link = d.last().attr("href");
-		// Get mid from link
-		linkChips = link.split('/');
-		lastChip = linkChips[linkChips.length - 1];
-		mid = lastChip.substr(0, lastChip.indexOf('?'));
+function getInjected(feed, isMain) {
+  var injected = isMain ? $(feed.find('.WB_face').get(0)): feed.children('.face');
+  return injected;
+}
+
+function getMidFromFeedItem(feed, isMain) {
+	// Get Weibo link
+	var d = isMain ? feed.find('a[node-type="feed_list_item_date"]'): feed.find('.date');
+	var link = d.last().attr("href");
+	// Get mid from link
+	linkChips = link.split('/');
+	lastChip = linkChips[linkChips.length - 1];
+	mid = lastChip.substr(0, lastChip.indexOf('?'));
+
+	return mid;
+}
+
+function getFeedList(isMain) {
+	if (isMain)
+		return $('div[action-type=feed_list_item]');
+	else
+		return $('dl[action-type=feed_list_item]');
+}
+
+function checkAndAddButton() {
+	// Check if in main page
+	url = document.URL;
+	isMain = url.toLowerCase().indexOf('s.weibo.com') < 0;
+
+	//
+	var feedItemList = getFeedList(isMain);
+	feedItemList.each(function(idx, feed) { 
+		feedO = $(feed);
+		mid = getMidFromFeedItem(feedO, isMain); // get Mid
 
 		//
 		// var text = $(feed).find('em').first().innerText;
 
 		// Build injection
-		// var injection = '<a href="https://api.pinboard.in/v1/posts/add?url='+link+'&description='+text+'&auth_token=">Send</a>';
 		var injection = $(document.createElement('button'));
 		injection.text('Add This');
-		injection.click({'mid':mid, 'feed':$(feed).clone()}, addOverlay);
-			// {
-			//	text: ,
-			//	click: function() { addOverlay(mid); }
-			// });
+		injection.click({'mid':mid, 'feed':feedO.clone()}, addOverlay);
 
 		// Inject to page under the avatar
-    var injected = $(feed).children('.face');
-    if (injected.length == 0)
-			injected = $($(feed).find('.WB_face').get(0));
+		var injected = getInjected(feedO, isMain);
     injected.append(injection);
 	});
 }
