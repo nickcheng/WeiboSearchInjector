@@ -1,21 +1,21 @@
 window.onload = function() {
-	setInterval(checkAndAddButton, 1000);
-	// checkAndAddButton();
+	// setInterval(checkAndAddButton, 1000);
+	checkAndAddButton();
 }
 
 function doInjection(injection, injected) {
-  // Check if injected
-  var button = injected.find('.injectbutton');
-  if (button.length > 0)
+	// Check if injected
+	var button = injected.find('.injectbutton');
+	if (button.length > 0)
 		return;
 
-  // Do injection
-  injected.append(injection);
+	// Do injection
+	injected.append(injection);
 }
 
 function getInjected(feed, isMain) {
-  var injected = isMain ? $(feed.find('.WB_face').get(0)): feed.children('.face');
-  return injected;
+	var injected = isMain ? $(feed.find('.WB_face').get(0)): feed.children('.face');
+	return injected;
 }
 
 function getMidFromFeedItem(feed, isMain) {
@@ -68,12 +68,17 @@ function addOverlay(event) {
 	mid = event.data.mid;
 	feed = event.data.feed;
 
-	// Define background overlay
+	// Overlay
 	var overlay = $(document.createElement('div'));
 	overlay.attr('class', 'overlay');
-	overlay.click(function() {
-		$(this).remove();
+
+	// Define background 
+	var bgPanel = $(document.createElement('div'));
+	bgPanel.attr('class', 'bgpanel');
+	bgPanel.click(function() {
+		overlay.remove();
 	});
+	overlay.append(bgPanel);
 
 	//
 	var editorPanel = $(document.createElement('div'));

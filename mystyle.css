@@ -1,13 +1,4 @@
-.editorpanel {
-    width: 760px;
-    height: 200px;
-    background-color: red;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .overlay {
-    -webkit-text-size-adjust: none;
     font-family: Helvetica, Arial, sans-serif;
     font-weight: bold;
     line-height: 1.0;
@@ -15,28 +6,49 @@
     font-variant: normal;
     font-style: normal;
     position: fixed;
-    z-index: 2147483647;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     font-size: 30px;
-    opacity: 0.9;
-    -webkit-transition: opacity 0.25s linear;
-    text-align: center;
-    padding: 200px 0 0 0;
+    padding: 100px 0 0 0;
     margin: 0;
-    background-color: #000;
-    color: black;
+}
+
+.editorpanel {
+    position: relative;
+    width: 760px;
+    height: 200px;
+    background-color: red;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.bgpanel {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.8);
 }
 
 .feed {
+    position: relative;
     font-weight: normal;
     font-size: 14px;
     width: 760px;
     margin-left: auto;
     margin-right: auto;
     background-color: white;
+}
+
+.feed .WB_arrow {
+    display: none;
+}
+
+.feed .WB_feed_datail {
+    padding: 10px;
 }
 
 .feed .WB_screen {
@@ -60,7 +72,9 @@
 }
 
 .feed .S_bg1 {
-    background-color: #d3d3d3;
+    background-color: #f2f2f2;
+    border: solid 1px #c6d89f;
+    padding: 5px;
 }
 
 .feed .WB_detail {
@@ -73,7 +87,6 @@
 
 .feed .WB_media_list {
     margin-right: -20px;
-    padding: 0 0 15px;
 }
 
 .feed .WB_media_list li {
@@ -138,6 +151,7 @@
 }
 
 .feed .WB_func {
+    display: none;
     text-align: left;
     color: black;
 }
