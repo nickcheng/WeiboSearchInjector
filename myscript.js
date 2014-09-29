@@ -54,7 +54,7 @@ function getMidFromFeedItem(feed, isMain) {
 function getFeedList(isMain) {
 	// Do not add button on overlay
 	if($('div.candidatetagpanel').text().length > 0)
-		return;
+		return $();
 
 	//
 	if (isMain)
