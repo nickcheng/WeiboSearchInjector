@@ -1,7 +1,7 @@
 {
-	"name": "Weibo Search Result Injector",
-	"description": "Weibo Search Result Injector",
-	"version": "1.0",
+	"name": "RAC Submit",
+	"description": "RAC Submit",
+	"version": "1.1",
 	"permissions": [
 		"http://s.weibo.com/*",
 		"http://weibo.com/*",

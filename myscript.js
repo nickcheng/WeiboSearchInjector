@@ -2,7 +2,8 @@ TAGURL = 'https://racsubmit.nxmix.com/weibo/tags';
 POSTURL = 'https://racsubmit.nxmix.com/weibo/submit'
 var TAGARRAY;
 
-window.onload = function() {
+// window.onload = function() {
+document.ready = function() {
 	// Load tags
 	loadTags();
 
@@ -76,10 +77,9 @@ function checkAndAddButton() {
 
 		// Build injection
 		var injection = $(document.createElement('button'));
-		injection.text('Publish');
 		injection.attr('class', 'injectbutton');
-		injection.css('background-image', 'url(' + chrome.extension.getURL("sbt64.png") + ')');
-		injection.css('background-size', '16px 16px');
+		injection.css('background-image', 'url(' + chrome.extension.getURL("button.png") + ')');
+		injection.css('background-size', '50px 20px');
 		injection.click({'mid':mid, 'feed':feedO.clone()}, addOverlay);
 
 		// Inject to page under the avatar
@@ -168,12 +168,6 @@ function addOverlay(event) {
 	buttonOk.attr('class', 'buttonok');
 	buttonOk.append('确认');
 	buttonOk.click(function() {
-		if (selectedTagArray.length <= 0) {
-			alert('没有选择任何标签.');
-			return;
-		}
-
-		//
 		var result = {
 			mid: mid,
 			tags: selectedTagArray.join(',')
@@ -186,7 +180,10 @@ function addOverlay(event) {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				alert('发送成功');
 				overlay.remove();
-			}
+			} 
+			// else if (xhr.status == 400) {
+			//	alert(xhr.responseText);
+			// }
 		}
 		xhr.send(JSON.stringify(result));
 	});
@@ -203,3 +200,10 @@ function addOverlay(event) {
 	// Added overlay to page
 	$(document.body).append(overlay);
 }
+
+// Esc key action
+$(document).keyup(function(e) {
+	if (e.keyCode == 27) { // Esc
+		$('div.overlay').remove(); // or whatever you want
+	}
+});
