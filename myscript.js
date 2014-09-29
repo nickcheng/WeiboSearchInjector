@@ -76,9 +76,10 @@ function checkAndAddButton() {
 
 		// Build injection
 		var injection = $(document.createElement('button'));
+		injection.text('Publish');
 		injection.attr('class', 'injectbutton');
 		injection.css('background-image', 'url(' + chrome.extension.getURL("sbt64.png") + ')');
-		injection.css('background-size', '32px 32px');
+		injection.css('background-size', '16px 16px');
 		injection.click({'mid':mid, 'feed':feedO.clone()}, addOverlay);
 
 		// Inject to page under the avatar
