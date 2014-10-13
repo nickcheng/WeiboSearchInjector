@@ -2,14 +2,12 @@ TAGURL = 'https://racsubmit.nxmix.com/weibo/tags';
 POSTURL = 'https://racsubmit.nxmix.com/weibo/submit'
 var TAGARRAY;
 
-// window.onload = function() {
-document.ready = function() {
-	// Load tags
-	loadTags();
+//
+setInterval(checkAndAddButton, 1000);
 
-	//
-	setInterval(checkAndAddButton, 1000);
-	// checkAndAddButton();
+function checkAndGetTag() {
+	if (!TAGARRAY)
+		loadTags();
 }
 
 function loadTags() {
@@ -65,6 +63,8 @@ function getFeedList(isMain) {
 }
 
 function checkAndAddButton() {
+	checkAndGetTag();
+
 	// Check if in main page
 	url = document.URL;
 	isMain = url.toLowerCase().indexOf('s.weibo.com') < 0;
