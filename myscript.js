@@ -21,26 +21,43 @@ function loadTags() {
 	xhr.send();
 }
 
-function doInjection(injection, injected) {
+function doInjection(injection, injected, pageType) {
 	// Check if injected
 	var button = injected.find('.injectbutton');
 	if (button.length > 0)
 		return;
 
 	// Do injection
-	injected.append(injection);
+	if (pageType == 'home' || pageType == 'search')
+		injected.append(injection);
+	else if (pageType == 'user')
+		injected.prepend(injection);
 }
 
-function getInjected(feed, isMain) {
-	var injected = isMain ? $(feed.find('.WB_face').get(0)): feed.children('.face');
+function getInjected(feed, pageType) {
+	var injected;
+	if (pageType == 'home')
+		injected = $(feed.find('.WB_face').get(0));
+	else if (pageType == 'search')
+		injected = feed.children('.face');
+	else if (pageType == 'user')
+		injected = feed.find('.WB_from').last();
 	return injected;
 }
 
-function getMidFromFeedItem(feed, isMain) {
+function getMidFromFeedItem(feed, pageType) {
 	// Get Weibo link
-	var d = isMain ? feed.find('a[node-type="feed_list_item_date"][class="S_link2 WB_time"]'): feed.find('.date');
+	var d;
+	if (pageType == 'home')
+		d = feed.find('a[node-type="feed_list_item_date"][class="S_link2 WB_time"]');
+	else if (pageType == 'search')
+		d = feed.find('.date');
+	else if (pageType == 'user')
+		d = feed.find('a[node-type="feed_list_item_date"][class="S_link2 WB_time"]');
 	var link = d.first().attr("href");
 	// Get mid from link
+	if (typeof link != 'string') 
+		return '';
 	linkChips = link.split('/');
 	lastChip = linkChips[linkChips.length - 1];
 	mid = lastChip;
@@ -50,16 +67,31 @@ function getMidFromFeedItem(feed, isMain) {
 	return mid;
 }
 
-function getFeedList(isMain) {
+function getFeedList(pageType) {
 	// Do not add button on overlay
 	if($('div.candidatetagpanel').text().length > 0)
 		return $();
 
 	//
-	if (isMain)
+	if (pageType == 'home')
 		return $('div[action-type=feed_list_item]');
-	else
+	else if (pageType == 'search')
 		return $('dl[action-type=feed_list_item]');
+	else if (pageType == 'user')
+		return $('div[action-type=feed_list_item]');
+}
+
+function getPageType() {
+	bodyClass = $($('body')[0]).attr('class');
+	var result;
+	if (bodyClass.indexOf('S_weibo') >= 0) {
+		result = 'search';
+	} else if (bodyClass.indexOf('S_profile') >= 0) {
+		result = 'user';
+	} else {
+		result = 'home';
+	}
+	return result;
 }
 
 function checkAndAddButton() {
@@ -67,24 +99,27 @@ function checkAndAddButton() {
 
 	// Check if in main page
 	url = document.URL;
-	isMain = url.toLowerCase().indexOf('s.weibo.com') < 0;
+	pageType = getPageType();
 
 	//
-	var feedItemList = getFeedList(isMain);
+	var feedItemList = getFeedList(pageType);
 	feedItemList.each(function(idx, feed) { 
 		feedO = $(feed);
-		mid = getMidFromFeedItem(feedO, isMain); // get Mid
+		mid = getMidFromFeedItem(feedO, pageType); // get Mid
 
 		// Build injection
 		var injection = $(document.createElement('button'));
-		injection.attr('class', 'injectbutton');
+		if (pageType == 'user')
+			injection.attr('class', 'injectbutton injectbuttonuserpage');
+		else 
+			injection.attr('class', 'injectbutton');
 		injection.css('background-image', 'url(' + chrome.extension.getURL("button.png") + ')');
 		injection.css('background-size', '50px 20px');
 		injection.click({'mid':mid, 'feed':feedO.clone()}, addOverlay);
 
 		// Inject to page under the avatar
-		var injected = getInjected(feedO, isMain);
-		doInjection(injection, injected);
+		var injected = getInjected(feedO, pageType);
+		doInjection(injection, injected, pageType);
 	});
 }
 
@@ -171,7 +206,7 @@ function addOverlay(event) {
 		var result = {
 			mid: mid,
 			tags: selectedTagArray.join(',')
-		};
+		};alert(mid);return false;
 		//
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', POSTURL, true);

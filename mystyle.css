@@ -12,6 +12,13 @@
     font-size: 9px;
 }
 
+.injectbuttonuserpage {
+    width: 55px;
+    height: 20px;
+    margin-top: -3px;
+    float: left;
+}
+
 .overlay {
     font-family: Helvetica, Arial, sans-serif;
     font-weight: bold;
