@@ -39,7 +39,7 @@ function getInjected(feed, pageType) {
 	if (pageType == 'home')
 		injected = $(feed.find('.WB_face').get(0));
 	else if (pageType == 'search')
-		injected = feed.children('.face');
+		injected = feed.find('.face').first();
 	else if (pageType == 'user')
 		injected = feed.find('.WB_from').last();
 	return injected;
@@ -52,7 +52,7 @@ function getMidFromFeedItem(feed, pageType) {
 	if (pageType == 'home')
 		d = t.find('a[node-type="feed_list_item_date"]');
 	else if (pageType == 'search')
-		d = feed.find('.date');
+		d = feed.find('.content').first().children('.feed_from').find('a[node-type="feed_list_item_date"]');
 	else if (pageType == 'user')
 		d = t.find('a[node-type="feed_list_item_date"]');
 	var link = d.first().attr("href");
@@ -74,12 +74,7 @@ function getFeedList(pageType) {
 		return $();
 
 	//
-	if (pageType == 'home')
-		return $('div[action-type=feed_list_item]');
-	else if (pageType == 'search')
-		return $('dl[action-type=feed_list_item]');
-	else if (pageType == 'user')
-		return $('div[action-type=feed_list_item]');
+	return $('div[action-type=feed_list_item]');
 }
 
 function getPageType() {
@@ -106,11 +101,7 @@ function checkAndAddButton() {
 	//
 	var feedItemList = getFeedList(pageType);
 	feedItemList.each(function(idx, feed) { 
-		var feedO;
-		if (pageType == 'search')
-			feedO = $(feed);
-		else 
-			feedO = $(feed).children('div.WB_feed_detail');
+		var feedO = $(feed).children('div.WB_feed_detail');
 		mid = getMidFromFeedItem(feedO, pageType); // get Mid
 
 		// Build injection
